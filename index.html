@@ -3,55 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Symbolic Portfolio</title>
+  <title>Home | RYOSHUN</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="RYOSHUN Home">
+        <img src="assets/ryoshun-logo.png" alt="RYOSHUN logo">
+        <span class="brand-fallback">RYOSHUN</span>
+      </a>
+      <nav class="main-nav">
+        <a href="index.html" class="current">Home</a>
+        <a href="about.html">About me</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
   <div class="page-shell">
-    <header class="hero container">
+    <section class="hero">
       <div class="hero-media" aria-hidden="true"></div>
-      <div class="hero-content">
+      <div class="hero-inner">
         <p class="eyebrow">Symbolic Portfolio</p>
         <h1>LOGIC AND MOTION</h1>
       </div>
-    </header>
+    </section>
 
-    <main>
-      <section class="archives container">
-        <div class="section-head">
-          <p class="eyebrow">Archives</p>
-          <h2>Selected Fields</h2>
-        </div>
-        <div class="archive-grid">
-          <article class="archive-card">
-            <h3>Web</h3>
-            <p>Design, front-end architecture, and interactive experiences.</p>
+    <section class="section">
+      <div class="card">
+        <p class="eyebrow">Latest Activity</p>
+        <div class="activity-grid">
+          <article class="activity-card span-6">
+            <h3>Website Direction Update</h3>
+            <p class="subtext">Human centered structure with subtle motion and editorial rhythm.</p>
           </article>
-          <article class="archive-card">
-            <h3>Video</h3>
-            <p>Motion direction, visual storytelling, and editing structure.</p>
+          <article class="activity-card span-6">
+            <h3>Video Narrative Prototype</h3>
+            <p class="subtext">Short-form visual narrative drafted using modular scene blocks.</p>
           </article>
-          <article class="archive-card">
-            <h3>Research</h3>
-            <p>Concept development, cultural references, and strategic notes.</p>
+          <article class="activity-card span-4">
+            <h3>Research Log</h3>
+            <p class="subtext">Behavioral notes around stress relief and intentional habits.</p>
+          </article>
+          <article class="activity-card span-4">
+            <h3>Design Sprint</h3>
+            <p class="subtext">Interaction polishing and spacing calibration for mobile-first flow.</p>
+          </article>
+          <article class="activity-card span-4">
+            <h3>Presentation Draft</h3>
+            <p class="subtext">Narrative for 2027 onward journey, place, and long-term projects.</p>
           </article>
         </div>
-      </section>
-
-      <section class="status container">
-        <div class="section-head">
-          <p class="eyebrow">Status</p>
-          <h2>Current & Next</h2>
-        </div>
-        <div class="status-card">
-          <p class="status-line"><span>Current Base</span><strong>Gold Coast</strong></p>
-          <p class="status-line"><span>From 2027</span><strong>Planned Journey Across Cities</strong></p>
-        </div>
-      </section>
-    </main>
+      </div>
+    </section>
   </div>
 </body>
 </html>
