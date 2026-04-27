@@ -58,18 +58,15 @@ img {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
-  font-weight: 800;
-  letter-spacing: 0.03em;
+  gap: 0;
 }
 
 .brand img {
-  width: 44px;
-  height: 44px;
-  object-fit: cover;
+  width: clamp(210px, 28vw, 380px);
+  height: auto;
+  object-fit: contain;
   border: 1px solid var(--line);
-  border-radius: 14px;
-  background: #ffffff;
+  background: #f7f7f7;
 }
 
 .brand-fallback {
@@ -387,5 +384,9 @@ label {
   .main-nav a {
     font-size: 0.82rem;
     padding: 9px 13px;
+  }
+
+  .brand img {
+    width: min(76vw, 300px);
   }
 }
