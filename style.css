@@ -6,6 +6,11 @@
   --card: #ffffff;
   --radius: 40px;
   --space-lg: clamp(56px, 8vw, 110px);
+  --hm-white: #ffffff;
+  --hm-black: #000000;
+  --hm-pill-gray: #f2f2f2;
+  --hm-pill-radius: 40px;
+  --hm-header-h: clamp(64px, 12vw, 84px);
 }
 
 * {
@@ -388,5 +393,310 @@ label {
 
   .brand img {
     width: min(76vw, 300px);
+  }
+}
+
+/* —— Human Made landing (index) —— */
+
+body.hm-landing {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--hm-white);
+  color: var(--hm-black);
+  font-family: "Inter", "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+}
+
+body.hm-landing.hm-menu-open {
+  overflow: hidden;
+}
+
+.pill-base {
+  border-radius: var(--hm-pill-radius);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: clamp(0.62rem, 1.35vw, 0.78rem);
+  line-height: 1;
+}
+
+.hm-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 2000;
+  background: var(--hm-white);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.hm-header__inner {
+  position: relative;
+  width: min(1280px, 100%);
+  margin: 0 auto;
+  min-height: var(--hm-header-h);
+  padding: clamp(10px, 2.4vw, 18px) clamp(14px, 3vw, 28px);
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 2vw, 16px);
+}
+
+.hm-burger {
+  position: relative;
+  z-index: 3;
+  flex: 0 0 44px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  cursor: pointer;
+  color: var(--hm-black);
+}
+
+.hm-burger:focus-visible {
+  outline: 2px solid var(--hm-black);
+  outline-offset: 3px;
+}
+
+.hm-burger__bar {
+  display: block;
+  height: 3px;
+  width: 26px;
+  background: currentColor;
+  border-radius: 2px;
+}
+
+.hm-header__wordmark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  width: min(380px, calc(100% - 120px));
+  text-align: center;
+  font-weight: 900;
+  font-size: clamp(0.72rem, 2.1vw, 1.05rem);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+.hm-header__actions {
+  position: relative;
+  z-index: 2;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0;
+  min-width: 0;
+  flex: 0 1 auto;
+}
+
+.hm-header__balance {
+  display: none;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+}
+
+.nav-pills {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: clamp(6px, 1.2vw, 10px);
+  max-width: min(72vw, 720px);
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.nav-pills--stack {
+  flex-direction: column;
+  align-items: stretch;
+  max-width: none;
+  overflow: visible;
+  padding: 8px 0 16px;
+  gap: 10px;
+}
+
+.nav-pill {
+  border-radius: var(--hm-pill-radius);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: clamp(0.62rem, 1.35vw, 0.78rem);
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  padding: clamp(10px, 1.8vw, 14px) clamp(12px, 2vw, 18px);
+  background: var(--hm-pill-gray);
+  color: var(--hm-black);
+  border: 1px solid transparent;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.nav-pill:hover {
+  background: #e8e8e8;
+}
+
+.nav-pill--lang {
+  background: var(--hm-white);
+  border-color: var(--hm-black);
+  min-width: 52px;
+}
+
+.nav-pill--lang:hover {
+  background: #fafafa;
+}
+
+.nav-pill--icon {
+  background: var(--hm-pill-gray);
+  border-color: var(--hm-black);
+  padding-inline: clamp(12px, 2vw, 16px);
+}
+
+.nav-pill--icon:hover {
+  background: #e8e8e8;
+}
+
+.nav-pill__mail {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.hm-header__nav-desktop .nav-pill--icon .nav-pill__mail {
+  transform: translateY(1px);
+}
+
+.hm-mobile-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  background: var(--hm-white);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+  padding: 0 clamp(16px, 4vw, 28px) 8px;
+}
+
+.hm-mobile-panel .nav-pill {
+  justify-content: center;
+  width: 100%;
+}
+
+.hm-main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--hm-header-h) + clamp(24px, 6vw, 56px)) clamp(16px, 4vw, 40px) clamp(100px, 18vh, 140px);
+}
+
+.main-logo-group {
+  width: min(1040px, 100%);
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: clamp(18px, 4vw, 40px);
+}
+
+.main-logo-group__mark {
+  width: min(88vw, 720px);
+  max-height: min(52vh, 520px);
+  height: auto;
+  object-fit: contain;
+  border-radius: 0;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.06));
+}
+
+.hm-display {
+  margin: 0;
+  font-weight: 900;
+  font-size: clamp(2.8rem, 12vw, 8.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.hm-display-sub {
+  margin: 0;
+  font-weight: 800;
+  font-size: clamp(1.1rem, 3vw, 1.75rem);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.hm-footer-anchor {
+  position: fixed;
+  right: clamp(12px, 3vw, 28px);
+  bottom: clamp(12px, 3vw, 28px);
+  z-index: 1500;
+}
+
+.footer-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(8px, 1.6vw, 14px);
+  padding: clamp(10px, 1.8vw, 14px) clamp(16px, 2.4vw, 22px);
+  border-radius: var(--hm-pill-radius);
+  background: var(--hm-pill-gray);
+  border: 1px solid var(--hm-black);
+  color: var(--hm-black);
+  text-decoration: none;
+  font-family: "Noto Sans JP", "Inter", sans-serif;
+  font-weight: 700;
+  font-size: clamp(0.95rem, 2.1vw, 1.15rem);
+  letter-spacing: 0.06em;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.footer-pill:hover {
+  background: #e8e8e8;
+}
+
+.footer-pill__label {
+  line-height: 1;
+}
+
+.footer-pill__duck {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-pill__duck-svg {
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .hm-header__nav-desktop {
+    display: none;
+  }
+
+  .hm-header__balance {
+    display: block;
+  }
+}
+
+@media (max-width: 520px) {
+  .hm-header__wordmark {
+    white-space: normal;
+    line-height: 1.15;
+    font-size: clamp(0.68rem, 3.6vw, 0.88rem);
+  }
+
+  .hm-display {
+    font-size: clamp(2.2rem, 11vw, 3.4rem);
   }
 }
