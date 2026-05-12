@@ -1,6 +1,12 @@
 :root {
-  /* ヒーローロゴ PNG の下部に埋め込まれた文字を隠すときの見せる縦の割合（小さいほど下を多くカット） */
-  --hero-logo-visible-ratio: 0.78;
+  /* ヒーローロゴ：画像全体を画面内に収めるための余白（ヘッダー下〜下端） */
+  --hm-hero-pad-top: calc(var(--hm-header-h) + clamp(12px, 2.5vw, 24px));
+  --hm-hero-pad-bottom: clamp(40px, 8vh, 72px);
+  --hero-logo-max-size: min(
+    92vw,
+    880px,
+    calc(min(100dvh, 100svh) - var(--hm-hero-pad-top) - var(--hm-hero-pad-bottom))
+  );
   --bg: #fdfdfd;
   --text: #000000;
   --muted: #555555;
@@ -628,38 +634,53 @@ body.hm-landing.hm-menu-open {
 }
 
 .hm-main {
+  box-sizing: border-box;
   min-height: 100vh;
+  min-height: 100dvh;
+  max-height: min(100vh, 100dvh, 100svh);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: calc(var(--hm-header-h) + clamp(24px, 6vw, 56px)) clamp(16px, 4vw, 40px) clamp(100px, 18vh, 140px);
+  padding: var(--hm-hero-pad-top) clamp(16px, 3.5vw, 40px) var(--hm-hero-pad-bottom);
+  overflow: hidden;
 }
 
 .main-logo-group {
   position: relative;
-  width: min(1200px, 100%);
+  width: min(880px, 100%);
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-inline: auto;
 }
 
-/* Square logo PNG の下部に埋め込まれている表記を隠す（画像本体はそのまま） */
+/* 正方形ロゴを view 内に必ず収める（はみ出し防止・全体表示） */
 .main-logo-group__crop {
   position: relative;
-  overflow: hidden;
-  height: min(78vh, 820px);
-  width: min(96vw, 1100px, calc(min(78vh, 820px) / var(--hero-logo-visible-ratio)));
+  flex: 0 1 auto;
+  width: var(--hero-logo-max-size);
+  max-width: 100%;
+  aspect-ratio: 1;
+  height: auto;
+  max-height: var(--hero-logo-max-size);
 }
 
 .main-logo-group__mark {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
   max-width: none;
+  object-fit: contain;
+  object-position: center;
   border-radius: 0;
   filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.06));
+}
+
+.hm-scroll-driver {
+  min-height: 240vh;
+  width: 100%;
+  pointer-events: none;
 }
 
 .hm-footer-anchor {
@@ -667,37 +688,75 @@ body.hm-landing.hm-menu-open {
   right: clamp(12px, 3vw, 28px);
   bottom: clamp(12px, 3vw, 28px);
   z-index: 1500;
+  display: flex;
+  justify-content: flex-end;
+  max-width: 100%;
+  padding-left: clamp(12px, 3vw, 24px);
+  box-sizing: border-box;
+  pointer-events: none;
 }
 
 .footer-pill {
   display: inline-flex;
-  align-items: center;
-  gap: clamp(8px, 1.6vw, 14px);
-  padding: clamp(10px, 1.8vw, 14px) clamp(16px, 2.4vw, 22px);
-  border-radius: var(--hm-pill-radius);
-  background: var(--hm-pill-gray);
-  border: 1px solid var(--hm-black);
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 0;
+  margin: 0;
+  max-width: min(94vw, 40rem);
+  border: none;
+  border-radius: 0;
+  background: transparent;
   color: var(--hm-black);
   text-decoration: none;
   font-family: "Noto Sans JP", "Inter", sans-serif;
   font-weight: 700;
   font-size: clamp(0.95rem, 2.1vw, 1.15rem);
   letter-spacing: 0.06em;
-  transition: background 0.15s ease, transform 0.15s ease;
+  pointer-events: auto;
+  transition: opacity 0.2s ease;
 }
 
 .footer-pill:hover {
-  background: #e8e8e8;
+  opacity: 0.65;
 }
 
-.footer-pill__label {
-  line-height: 1;
+.footer-pill:focus-visible {
+  outline: 2px solid var(--hm-black);
+  outline-offset: 4px;
+  opacity: 1;
+}
+
+.hm-story-flock {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: clamp(4px, 1vw, 10px);
+  max-width: min(94vw, 42rem);
+  will-change: transform;
+}
+
+.footer-pill__label.hm-story-visible {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: min(82vw, 34em);
+  line-height: 1.45;
+  text-align: right;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+
+.hm-story-tail {
+  display: inline;
 }
 
 .footer-pill__duck {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex: 0 0 auto;
 }
 
 .footer-pill__duck-svg {
@@ -720,15 +779,34 @@ body.hm-landing.hm-menu-open {
   .hm-header__actions {
     max-width: none;
   }
+
+  .main-logo-group__crop {
+    --hero-logo-max-size: min(
+      92vw,
+      100%,
+      calc(min(100dvh, 100svh) - var(--hm-hero-pad-top) - var(--hm-hero-pad-bottom))
+    );
+  }
 }
 
 @media (max-width: 520px) {
+  :root {
+    --hm-hero-pad-top: calc(var(--hm-header-h) + clamp(8px, 2vw, 16px));
+    --hm-hero-pad-bottom: clamp(32px, 10vh, 56px);
+    --hero-logo-max-size: min(
+      92vw,
+      100%,
+      calc(100svh - var(--hm-hero-pad-top) - var(--hm-hero-pad-bottom))
+    );
+  }
+
   .hm-header__logo {
     height: clamp(40px, 13vw, 54px);
   }
+}
 
-  .main-logo-group__crop {
-    height: min(72vh, 640px);
-    width: min(96vw, calc(min(72vh, 640px) / var(--hero-logo-visible-ratio)));
+@media (prefers-reduced-motion: reduce) {
+  .hm-story-flock {
+    transform: none !important;
   }
 }
