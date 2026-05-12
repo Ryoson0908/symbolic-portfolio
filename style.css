@@ -433,9 +433,30 @@ body.hm-landing.hm-menu-open {
   margin: 0 auto;
   min-height: var(--hm-header-h);
   padding: clamp(10px, 2.4vw, 18px) clamp(14px, 3vw, 28px);
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: clamp(8px, 1.5vw, 16px);
+}
+
+.hm-header__cell--left {
   display: flex;
   align-items: center;
-  gap: clamp(8px, 2vw, 16px);
+  justify-content: flex-start;
+}
+
+.hm-header__cell--center {
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-inline: clamp(4px, 1vw, 12px);
+}
+
+.hm-header__cell--right {
+  min-width: 0;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .hm-burger {
@@ -470,32 +491,27 @@ body.hm-landing.hm-menu-open {
 }
 
 .hm-header__wordmark {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   margin: 0;
-  width: min(380px, calc(100% - 120px));
+  max-width: 100%;
   text-align: center;
   font-weight: 900;
-  font-size: clamp(0.72rem, 2.1vw, 1.05rem);
+  font-size: clamp(0.65rem, 1.65vw, 0.98rem);
   letter-spacing: 0.02em;
+  line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  pointer-events: none;
 }
 
 .hm-header__actions {
   position: relative;
   z-index: 2;
-  margin-left: auto;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 0;
   min-width: 0;
-  flex: 0 1 auto;
+  max-width: min(58vw, 720px);
 }
 
 .hm-header__balance {
@@ -510,7 +526,7 @@ body.hm-landing.hm-menu-open {
   flex-wrap: nowrap;
   align-items: center;
   gap: clamp(6px, 1.2vw, 10px);
-  max-width: min(72vw, 720px);
+  max-width: 100%;
   overflow-x: auto;
   padding-bottom: 2px;
   scrollbar-width: thin;
@@ -623,8 +639,8 @@ body.hm-landing.hm-menu-open {
 .hm-display {
   margin: 0;
   font-weight: 900;
-  font-size: clamp(2.8rem, 12vw, 8.5rem);
-  line-height: 0.92;
+  font-size: clamp(2.2rem, 9.5vw, 7rem);
+  line-height: 0.95;
   letter-spacing: -0.02em;
   text-transform: uppercase;
 }
@@ -680,12 +696,20 @@ body.hm-landing.hm-menu-open {
 }
 
 @media (max-width: 900px) {
+  .hm-header__inner {
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+  }
+
   .hm-header__nav-desktop {
     display: none;
   }
 
   .hm-header__balance {
     display: block;
+  }
+
+  .hm-header__actions {
+    max-width: none;
   }
 }
 
