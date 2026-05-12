@@ -1,4 +1,6 @@
 :root {
+  /* ヒーローロゴ PNG の下部に埋め込まれた文字を隠すときの見せる縦の割合（小さいほど下を多くカット） */
+  --hero-logo-visible-ratio: 0.78;
   --bg: #fdfdfd;
   --text: #000000;
   --muted: #555555;
@@ -39,6 +41,18 @@ img {
   max-width: 100%;
   display: block;
   border-radius: var(--radius);
+}
+
+.visually-hidden:not(:focus):not(:active) {
+  border: 0;
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 
 .site-header {
@@ -490,17 +504,19 @@ body.hm-landing.hm-menu-open {
   border-radius: 2px;
 }
 
-.hm-header__wordmark {
-  margin: 0;
+.hm-header__brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: min(78vw, 440px);
+}
+
+.hm-header__logo {
+  width: auto;
+  height: clamp(44px, 11vw, 60px);
   max-width: 100%;
-  text-align: center;
-  font-weight: 900;
-  font-size: clamp(0.65rem, 1.65vw, 0.98rem);
-  letter-spacing: 0.02em;
-  line-height: 1.2;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  object-fit: contain;
+  border-radius: 0;
 }
 
 .hm-header__actions {
@@ -620,37 +636,30 @@ body.hm-landing.hm-menu-open {
 }
 
 .main-logo-group {
-  width: min(1040px, 100%);
-  display: grid;
-  justify-items: center;
-  text-align: center;
-  gap: clamp(18px, 4vw, 40px);
+  position: relative;
+  width: min(1200px, 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Square logo PNG の下部に埋め込まれている表記を隠す（画像本体はそのまま） */
+.main-logo-group__crop {
+  position: relative;
+  overflow: hidden;
+  height: min(78vh, 820px);
+  width: min(96vw, 1100px, calc(min(78vh, 820px) / var(--hero-logo-visible-ratio)));
 }
 
 .main-logo-group__mark {
-  width: min(88vw, 720px);
-  max-height: min(52vh, 520px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: auto;
-  object-fit: contain;
+  max-width: none;
   border-radius: 0;
   filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.06));
-}
-
-.hm-display {
-  margin: 0;
-  font-weight: 900;
-  font-size: clamp(2.2rem, 9.5vw, 7rem);
-  line-height: 0.95;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-}
-
-.hm-display-sub {
-  margin: 0;
-  font-weight: 800;
-  font-size: clamp(1.1rem, 3vw, 1.75rem);
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
 }
 
 .hm-footer-anchor {
@@ -714,13 +723,12 @@ body.hm-landing.hm-menu-open {
 }
 
 @media (max-width: 520px) {
-  .hm-header__wordmark {
-    white-space: normal;
-    line-height: 1.15;
-    font-size: clamp(0.68rem, 3.6vw, 0.88rem);
+  .hm-header__logo {
+    height: clamp(40px, 13vw, 54px);
   }
 
-  .hm-display {
-    font-size: clamp(2.2rem, 11vw, 3.4rem);
+  .main-logo-group__crop {
+    height: min(72vh, 640px);
+    width: min(96vw, calc(min(72vh, 640px) / var(--hero-logo-visible-ratio)));
   }
 }
