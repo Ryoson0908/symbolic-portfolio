@@ -83,14 +83,54 @@
     </div>
   </main>
 
-  <!-- スクロール量（鳥・文字アニメーション用）。視覚的には余白のみ -->
-  <div class="hm-scroll-driver" aria-hidden="true"></div>
+  <section class="hm-mission" id="hm-mission" aria-labelledby="hm-mission-heading">
+    <h2 id="hm-mission-heading" class="visually-hidden">MISSION</h2>
+    <div class="hm-mission__track">
+      <div class="hm-mission__sticky">
+        <div class="hm-mission__panel">
+          <p class="hm-mission__tag">(MISSION)</p>
+          <a class="hm-mission__link" href="about.html" aria-label="COMPANY・自己紹介へ。ミッションおよびミッションステートメント全文。">
+            <div class="hm-mission__text" id="hm-mission-text-target">
+              <div class="hm-mission__lead" id="hm-mission-lead-target">
+                <p class="hm-mission__line">人間の閃きが生み出し、</p>
+                <p class="hm-mission__line">人間の手が創り出す輝きを、世界へ。</p>
+              </div>
+              <div class="hm-mission__after" id="hm-mission-after-target">
+                <p class="hm-mission__subtag">(MISSION STATEMENT)</p>
+                <p class="hm-mission__subline">「創造」こそ、人間の根源的な価値である。私たちはそう信じている。</p>
+                <p class="hm-mission__subline">効率や正解を超越した先に、かつてないアイデアは潜んでいる。</p>
+                <p class="hm-mission__subline">閃きと人の手が生み出すクリエイションで、人類未踏の発見と体験を生み出し、新たなカルチャーが生まれる起爆剤となる。</p>
+                <p class="hm-mission__subline hm-mission__subline--sign">それが、RYOSHUN MIYAZATO Inc.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="hm-mission-follow" aria-hidden="true">
+      <div class="hm-mission-follow__curves">
+        <span class="hm-mission-follow__arc hm-mission-follow__arc--l"></span>
+        <span class="hm-mission-follow__arc hm-mission-follow__arc--r"></span>
+      </div>
+    </div>
+    <div class="hm-mission-duck" id="hm-mission-duck-target" aria-hidden="true">
+      <svg class="footer-pill__duck-svg hm-mission-duck__svg" viewBox="0 0 48 40" width="36" height="30" role="img">
+        <title>duck</title>
+        <ellipse cx="22" cy="22" rx="14" ry="12" fill="#fff" stroke="#000" stroke-width="1.6"/>
+        <circle cx="30" cy="14" r="9" fill="#fff" stroke="#000" stroke-width="1.6"/>
+        <circle cx="33" cy="12" r="2" fill="#000"/>
+        <path d="M38 16c4 2 6 6 2 7-2 .5-4-1-4-3" fill="none" stroke="#000" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M8 24c-6 2-6 10 2 8 3-1 5-4 4-7" fill="#fff" stroke="#000" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M34 18l10 2c2.5.5 2.5 4-.2 4.4L36 23" fill="#f6a623" stroke="#000" stroke-width="1.4" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </section>
 
   <footer class="hm-footer-anchor" role="contentinfo">
-    <a class="footer-pill" href="about.html" id="hm-footer-story" aria-label="COMPANY・自己紹介へ。人間の閃きが生み出し、人間の手が創り出す輝きを、世界へ。">
+    <a class="footer-pill" href="about.html" id="hm-footer-story" aria-label="COMPANY・自己紹介へ。ミッション文の冒頭が鳥の横から表示されます。">
       <span class="hm-story-flock" id="hm-story-flock">
         <span class="footer-pill__label hm-story-visible" id="hm-story-visible" data-story="人間の閃きが生み出し、人間の手が創り出す輝きを、世界へ。" aria-hidden="true"></span>
-        <span class="footer-pill__duck" aria-hidden="true">
+        <span class="footer-pill__duck" id="hm-footer-duck" aria-hidden="true">
           <svg class="footer-pill__duck-svg" viewBox="0 0 48 40" width="36" height="30" role="img">
             <title>duck</title>
             <ellipse cx="22" cy="22" rx="14" ry="12" fill="#fff" stroke="#000" stroke-width="1.6"/>
@@ -131,11 +171,25 @@
     (function () {
       var label = document.getElementById("hm-story-visible");
       var flock = document.getElementById("hm-story-flock");
-      var driver = document.querySelector(".hm-scroll-driver");
-      if (!label || !flock || !driver) return;
+      var mission = document.getElementById("hm-mission");
+      var footDuck = document.getElementById("hm-footer-duck");
+      var missionLeadTarget = document.getElementById("hm-mission-lead-target");
+      var missionAfterTarget = document.getElementById("hm-mission-after-target");
+      var missionDuckTarget = document.getElementById("hm-mission-duck-target");
+      var footerPill = document.getElementById("hm-footer-story");
+      if (!label || !flock || !mission || !footDuck || !missionLeadTarget || !missionDuckTarget || !footerPill) return;
+
+      var missionPanel = mission.querySelector(".hm-mission__panel");
+      var missionTag = mission.querySelector(".hm-mission__tag");
 
       var raw = label.getAttribute("data-story") || "";
       label.removeAttribute("data-story");
+      var leadLineEls = missionLeadTarget.querySelectorAll(".hm-mission__line");
+      var leadLines = Array.prototype.map.call(leadLineEls, function (el) {
+        return el.textContent.trim();
+      });
+      var rawFromLead = leadLines.join("");
+      if (rawFromLead.length) raw = rawFromLead;
       var n = raw.length || 1;
       var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -145,55 +199,205 @@
         return d.innerHTML;
       }
 
-      function progress() {
-        if (reduceMotion) return 1;
-        var scrollable = Math.max(
-          1,
-          document.documentElement.scrollHeight - window.innerHeight
-        );
-        var y = window.scrollY || document.documentElement.scrollTop || 0;
-        var p = y / scrollable;
-        if (p < 0) p = 0;
-        if (p > 1) p = 1;
-        return p;
+      function clamp(x, a, b) {
+        if (x < a) return a;
+        if (x > b) return b;
+        return x;
       }
 
-      /* 鳥のすぐ左にだけ文字を載せる（未表示分は幅を取らない） */
+      function smoothstep(x) {
+        x = clamp(x, 0, 1);
+        return x * x * (3 - 2 * x);
+      }
+
+      /* ページ先頭→MISSION 固定までを 0〜1（右下の鳥からそのまま MISSION リードへ一連で補間） */
+      function journey() {
+        var y = window.scrollY || document.documentElement.scrollTop;
+        var vh = window.innerHeight;
+        var missionTop = mission.offsetTop;
+        var missionH = mission.offsetHeight;
+        var aim = missionTop + missionH * 0.4 - vh * 0.48;
+        return clamp(y / Math.max(aim, 100), 0, 1);
+      }
+
+      function clearMorphStyles() {
+        flock.style.cssText = "";
+        label.style.cssText = "";
+        footDuck.style.cssText = "";
+        missionDuckTarget.style.cssText = "";
+        if (missionPanel) missionPanel.style.cssText = "";
+        if (missionTag) missionTag.style.cssText = "";
+        if (missionLeadTarget) missionLeadTarget.style.cssText = "";
+        if (missionAfterTarget) missionAfterTarget.style.cssText = "";
+      }
+
+      /* Mission本体と同じ2行ブロックで描画し、合流時の位置ズレを避ける */
       function renderVisible(wave) {
+        var line0 = leadLines[0] || "";
+        var line1 = leadLines[1] || "";
         var fl = Math.floor(wave);
         if (fl < 0) fl = 0;
         var full = Math.min(n, fl);
         var frac = wave - fl;
-        var html = escapeHtml(raw.substring(0, full));
-        if (full < n && frac > 0.001) {
+        var len0 = line0.length;
+
+        function tailSpan(ch) {
           var t = Math.min(1, frac);
-          html +=
-            '<span class="hm-story-tail" style="opacity:' +
-            t +
-            '">' +
-            escapeHtml(raw.charAt(full)) +
-            "</span>";
+          return '<span class="hm-story-tail" style="opacity:' + t + '">' + escapeHtml(ch) + "</span>";
         }
-        label.innerHTML = html;
+
+        var html0;
+        var html1;
+        if (full <= len0) {
+          html0 = escapeHtml(line0.substring(0, full));
+          if (full < len0 && frac > 0.001) html0 += tailSpan(line0.charAt(full));
+          html1 = "";
+          if (full === len0 && frac > 0.001 && line1.length) html1 = tailSpan(line1.charAt(0));
+        } else {
+          html0 = escapeHtml(line0);
+          var k = full - len0;
+          html1 = escapeHtml(line1.substring(0, k));
+          if (k < line1.length && frac > 0.001) html1 += tailSpan(line1.charAt(k));
+        }
+
+        label.innerHTML =
+          '<span class="hm-story-line hm-story-line--flock">' +
+          html0 +
+          '</span><span class="hm-story-line hm-story-line--flock">' +
+          html1 +
+          "</span>";
       }
 
       function apply() {
-        var p = progress();
-        var shift = p * -58;
-        flock.style.transform = "translateX(" + shift + "vw)";
+        if (reduceMotion) {
+          document.body.classList.add("hm-mission-locked");
+          clearMorphStyles();
+          label.textContent = raw;
+          return;
+        }
 
-        /* 先頭「人間の」(3字)はスクロール0付近でも出す */
-        var wave = p * (n + 6) + 3;
+        var g = journey();
+
+        if (g >= 1) {
+          document.body.classList.add("hm-mission-locked");
+          clearMorphStyles();
+          label.textContent = raw;
+          return;
+        }
+
+        document.body.classList.remove("hm-mission-locked");
+
+        var wave = 3 + smoothstep(g) * (n + 6);
         renderVisible(wave);
-      }
 
-      function fullReveal() {
+        var vh = window.innerHeight;
+        var pad = Math.round(Math.max(12, Math.min(28, window.innerWidth * 0.03)));
+        var end = missionLeadTarget.getBoundingClientRect();
+        var duckEnd = missionDuckTarget.getBoundingClientRect();
+        var e = smoothstep(g);
+        /* リードの実DOMとフローティングは常に排他表示（補間和＝1）→二重写しを防ぐ */
+        var settle = smoothstep((e - 0.76) / 0.24);
+        var merge = smoothstep((g - 0.89) / 0.11);
+        var dockOpacity = merge;
+        var flockOpacity = 1 - merge;
+        /* Missionブロック全体がビューポート下から持ち上がる量（スクロールに連動） */
+        var riseAmt = (1 - smoothstep((g - 0.06) / 0.82)) * Math.min(vh * 0.52, 560);
+        var tagReveal = smoothstep((g - 0.08) / 0.28);
+        var statementReveal = missionAfterTarget ? smoothstep((g - 0.88) / 0.12) : 0;
+
+        var fsStart = parseFloat(getComputedStyle(footerPill).fontSize) || 16;
+        var lineRef = missionLeadTarget.querySelector(".hm-mission__line");
+        var fsEnd = lineRef ? parseFloat(getComputedStyle(lineRef).fontSize) : 28;
+
+        flock.style.position = "fixed";
+        flock.style.right = pad + "px";
+        flock.style.bottom = pad + "px";
+        flock.style.left = "auto";
+        flock.style.top = "auto";
         flock.style.transform = "";
-        label.textContent = raw;
+        flock.style.width = "max-content";
+        flock.style.maxWidth = Math.min(window.innerWidth * 0.94, 672) + "px";
+        flock.style.margin = "0";
+        flock.style.padding = "0";
+        flock.style.boxSizing = "border-box";
+        flock.style.zIndex = "1600";
+        flock.style.display = "flex";
+        flock.style.flexDirection = "row";
+        flock.style.flexWrap = "nowrap";
+        flock.style.alignItems = "flex-end";
+        flock.style.justifyContent = "flex-start";
+        flock.style.gap = "clamp(4px, 1vw, 10px)";
+
+        var br0 = flock.getBoundingClientRect();
+        var duckBr0 = footDuck.getBoundingClientRect();
+
+        /* 終盤はズレ補正を締めてミッションリード矩形にピッタリ重ねる */
+        var liftEase = smoothstep(Math.pow(e, 0.92));
+        var tyExtra = (1 - liftEase) * Math.min(vh * 0.14, 120) * (1 - settle);
+        flock.style.left = br0.left + (end.left - br0.left) * e + "px";
+        flock.style.top = br0.top + (end.top - br0.top) * liftEase - tyExtra + "px";
+        flock.style.right = "auto";
+        flock.style.bottom = "auto";
+        flock.style.width = Math.max(br0.width + (end.width - br0.width) * e, 48) + "px";
+        flock.style.maxWidth = "none";
+
+        flock.style.pointerEvents = merge > 0.55 ? "none" : "auto";
+        flock.style.opacity = String(flockOpacity);
+
+        label.style.display = "block";
+        label.style.width = "100%";
+        label.style.fontSize = fsStart + (fsEnd - fsStart) * e + "px";
+        label.style.lineHeight = lineRef && settle > 0.9
+          ? getComputedStyle(lineRef).lineHeight
+          : String(1.45 + (1.38 - 1.45) * e);
+        label.style.letterSpacing = 0.06 + (0.04 - 0.06) * e + "em";
+        label.style.textAlign = "left";
+        label.style.fontWeight = "700";
+        label.style.fontFamily = '"Noto Sans JP","Inter",sans-serif';
+
+        footDuck.style.position = "fixed";
+        footDuck.style.left = duckBr0.left + (duckEnd.left - duckBr0.left) * e + "px";
+        footDuck.style.top = duckBr0.top + (duckEnd.top - duckBr0.top) * liftEase - tyExtra * 0.85 + "px";
+        footDuck.style.right = "auto";
+        footDuck.style.bottom = "auto";
+        footDuck.style.zIndex = "1601";
+        footDuck.style.margin = "0";
+        footDuck.style.opacity = String(flockOpacity);
+
+        if (merge > 0.72) {
+          var dOp = (merge - 0.72) / 0.28;
+          missionDuckTarget.style.visibility = "visible";
+          missionDuckTarget.style.opacity = String(clamp(dOp, 0, 1));
+          missionDuckTarget.style.zIndex = "1602";
+        } else {
+          missionDuckTarget.style.visibility = "";
+          missionDuckTarget.style.opacity = "";
+          missionDuckTarget.style.zIndex = "";
+        }
+
+        if (missionPanel) {
+          missionPanel.style.visibility = g > 0.04 ? "visible" : "hidden";
+          missionPanel.style.pointerEvents = merge > 0.94 ? "auto" : "none";
+          missionPanel.style.opacity = "1";
+          missionPanel.style.transform = "translateY(" + riseAmt + "px)";
+          missionPanel.style.willChange = "transform";
+        }
+        if (missionTag) {
+          missionTag.style.opacity = String(tagReveal);
+        }
+        if (missionLeadTarget) {
+          missionLeadTarget.style.opacity = String(dockOpacity);
+          missionLeadTarget.style.visibility = dockOpacity < 0.002 ? "hidden" : "visible";
+        }
+        if (missionAfterTarget) {
+          missionAfterTarget.style.opacity = String(statementReveal);
+          missionAfterTarget.style.transform =
+            "translateY(" + (1 - statementReveal) * Math.min(28, vh * 0.04) + "px)";
+        }
       }
 
       if (reduceMotion) {
-        fullReveal();
+        apply();
         return;
       }
 
@@ -206,6 +410,7 @@
           apply();
         });
       }
+
 
       apply();
       window.addEventListener("scroll", onScrollOrResize, { passive: true });

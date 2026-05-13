@@ -421,7 +421,7 @@ label {
 body.hm-landing {
   margin: 0;
   min-height: 100vh;
-  background: var(--hm-white);
+  background: #f7f7f7;
   color: var(--hm-black);
   font-family: "Inter", "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
 }
@@ -643,6 +643,7 @@ body.hm-landing.hm-menu-open {
   justify-content: center;
   padding: var(--hm-hero-pad-top) clamp(16px, 3.5vw, 40px) var(--hm-hero-pad-bottom);
   overflow: hidden;
+  background: #f7f7f7;
 }
 
 .main-logo-group {
@@ -677,10 +678,207 @@ body.hm-landing.hm-menu-open {
   filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.06));
 }
 
-.hm-scroll-driver {
-  min-height: 240vh;
-  width: 100%;
+.hm-mission {
+  position: relative;
+  background: #f7f7f7;
+}
+
+.hm-mission__track {
+  min-height: 260vh;
+}
+
+.hm-mission__sticky {
+  position: sticky;
+  top: calc(var(--hm-header-h) + clamp(16px, 3vh, 40px));
+  z-index: 100;
+  min-height: calc(100dvh - var(--hm-header-h) - clamp(24px, 5vh, 56px));
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-bottom: clamp(80px, 14vh, 140px);
+  box-sizing: border-box;
+}
+
+.hm-mission__panel {
+  display: grid;
+  grid-template-columns: minmax(108px, 20vw) minmax(0, 1fr);
+  gap: clamp(20px, 4vw, 64px);
+  align-items: start;
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 40px);
+  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
+  transition: none;
+}
+
+.hm-mission__tag {
+  margin: 0;
+  font-family: "Inter", "Noto Sans JP", sans-serif;
+  font-size: clamp(0.65rem, 1.15vw, 0.8rem);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--hm-black);
+  padding-top: 0.4em;
+}
+
+.hm-mission__link {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}
+
+.hm-mission__link:hover .hm-mission__line,
+.hm-mission__link:hover .hm-mission__subline {
+  opacity: 0.72;
+}
+
+.hm-mission__text {
+  margin: 0;
+}
+
+.hm-mission__lead {
+  margin: 0;
+  opacity: 0;
+}
+
+.hm-mission__after {
+  opacity: 0;
+  margin-top: clamp(1.25rem, 3.2vw, 2rem);
+  padding-top: clamp(1rem, 2.6vw, 1.6rem);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.hm-mission__subtag {
+  margin: 0 0 0.85em;
+  font-family: "Inter", "Noto Sans JP", sans-serif;
+  font-size: clamp(0.65rem, 1.15vw, 0.8rem);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--hm-black);
+}
+
+.hm-mission__subline {
+  margin: 0;
+  font-family: "Noto Sans JP", "Inter", sans-serif;
+  font-size: clamp(0.92rem, 1.9vw, 1.22rem);
+  font-weight: 600;
+  line-height: 1.52;
+  letter-spacing: 0.03em;
+  color: var(--hm-black);
+}
+
+.hm-mission__subline + .hm-mission__subline {
+  margin-top: 0.55em;
+}
+
+.hm-mission__subline--sign {
+  margin-top: 0.85em;
+  font-weight: 700;
+}
+
+.hm-mission__line {
+  margin: 0;
+  font-family: "Noto Sans JP", "Inter", sans-serif;
+  font-size: clamp(1.2rem, 3.1vw, 1.95rem);
+  font-weight: 700;
+  line-height: 1.38;
+  letter-spacing: 0.04em;
+  color: var(--hm-black);
+}
+
+.hm-mission__line + .hm-mission__line {
+  margin-top: 0.15em;
+}
+
+.hm-mission-duck {
+  position: fixed;
+  right: clamp(12px, 3vw, 28px);
+  bottom: clamp(12px, 3vw, 28px);
+  z-index: 1490;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: none;
+}
+
+.hm-mission-duck__svg {
+  display: block;
+}
+
+body.hm-mission-locked .hm-mission__panel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+body.hm-mission-locked .hm-mission__lead,
+body.hm-mission-locked .hm-mission__after {
+  opacity: 1;
+  transform: none;
+}
+
+/* Mission完了後：オフホワイトから白への連続スクロール（下端の黒いカーブ） */
+.hm-mission-follow {
+  position: relative;
+  z-index: 20;
+  min-height: clamp(100px, 18vh, 180px);
+  padding-bottom: clamp(48px, 10vh, 96px);
+  background: #ffffff;
+}
+
+.hm-mission-follow__curves {
+  position: relative;
+  height: clamp(64px, 11vw, 104px);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hm-mission-follow__arc {
+  position: absolute;
+  bottom: 0;
+  width: min(56vw, 460px);
+  aspect-ratio: 1;
+  background: #0a0a0a;
+  border-radius: 50%;
+}
+
+.hm-mission-follow__arc--l {
+  left: max(-12vw, -72px);
+  transform: translateY(54%);
+}
+
+.hm-mission-follow__arc--r {
+  right: max(-12vw, -72px);
+  transform: translateY(54%);
+}
+
+body.hm-mission-locked .hm-mission-duck {
+  opacity: 1;
+  visibility: visible;
+}
+
+body.hm-mission-locked .hm-footer-anchor {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .hm-mission__panel {
+    grid-template-columns: 1fr;
+    gap: clamp(14px, 3vw, 24px);
+  }
+
+  .hm-mission__tag {
+    padding-top: 0;
+  }
 }
 
 .hm-footer-anchor {
@@ -752,6 +950,16 @@ body.hm-landing.hm-menu-open {
   display: inline;
 }
 
+/* フローティング文を Mission の2行レイアウトに一致させる（合流時の二重表示防止） */
+.hm-story-line--flock {
+  display: block;
+  margin: 0;
+}
+
+.hm-story-line--flock + .hm-story-line--flock {
+  margin-top: 0.15em;
+}
+
 .footer-pill__duck {
   display: inline-flex;
   align-items: center;
@@ -808,5 +1016,29 @@ body.hm-landing.hm-menu-open {
 @media (prefers-reduced-motion: reduce) {
   .hm-story-flock {
     transform: none !important;
+  }
+
+  body.hm-landing .hm-footer-anchor {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  body.hm-landing .hm-mission__panel {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: none !important;
+  }
+
+  body.hm-landing .hm-mission__lead,
+  body.hm-landing .hm-mission__after {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  body.hm-landing .hm-mission-duck {
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 }
