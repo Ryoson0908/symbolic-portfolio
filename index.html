@@ -6,7 +6,7 @@
   <title>Ryoshun Miyazato</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Noto+Sans+JP:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Noto+Sans+JP:wght@500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="hm-landing">
@@ -88,22 +88,25 @@
     <div class="hm-mission__track">
       <div class="hm-mission__sticky">
         <div class="hm-mission__panel">
-          <p class="hm-mission__tag">(MISSION)</p>
-          <a class="hm-mission__link" href="about.html" aria-label="COMPANY・自己紹介へ。ミッションおよびミッションステートメント全文。">
-            <div class="hm-mission__text" id="hm-mission-text-target">
-              <div class="hm-mission__lead" id="hm-mission-lead-target">
-                <p class="hm-mission__line">人間の閃きが生み出し、</p>
-                <p class="hm-mission__line">人間の手が創り出す輝きを、世界へ。</p>
-              </div>
+          <p class="hm-mission__tag hm-mission__tag--lead">(MISSION)</p>
+          <a class="hm-mission__cell hm-mission__cell--lead hm-mission__link" href="about.html" aria-label="COMPANY・自己紹介へ。ミッション・ミッションステートメント全文。">
+            <div class="hm-mission__lead" id="hm-mission-lead-target">
+              <p class="hm-mission__line">人間の閃きが生み出し、</p>
+              <p class="hm-mission__line">人間の手が創り出す輝きを、世界へ。</p>
+            </div>
+          </a>
+          <div class="hm-mission__stmt-bundle" id="hm-mission-stmt-bundle">
+            <p class="hm-mission__tag hm-mission__tag--statement">(MISSION STATEMENT)</p>
+            <a class="hm-mission__cell hm-mission__cell--stmt hm-mission__link" href="about.html" aria-label="COMPANY・自己紹介へ。ミッション・ミッションステートメント全文。">
               <div class="hm-mission__after" id="hm-mission-after-target">
-                <p class="hm-mission__subtag">(MISSION STATEMENT)</p>
-                <p class="hm-mission__subline">「創造」こそ、人間の根源的な価値である。私たちはそう信じている。</p>
+                <p class="hm-mission__subline">「創造」こそ、人間の根源的な価値である。</p>
+                <p class="hm-mission__subline">私たちはそう信じている。</p>
                 <p class="hm-mission__subline">効率や正解を超越した先に、かつてないアイデアは潜んでいる。</p>
                 <p class="hm-mission__subline">閃きと人の手が生み出すクリエイションで、人類未踏の発見と体験を生み出し、新たなカルチャーが生まれる起爆剤となる。</p>
                 <p class="hm-mission__subline hm-mission__subline--sign">それが、RYOSHUN MIYAZATO Inc.</p>
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -129,7 +132,21 @@
   <footer class="hm-footer-anchor" role="contentinfo">
     <a class="footer-pill" href="about.html" id="hm-footer-story" aria-label="COMPANY・自己紹介へ。ミッション文の冒頭が鳥の横から表示されます。">
       <span class="hm-story-flock" id="hm-story-flock">
-        <span class="footer-pill__label hm-story-visible" id="hm-story-visible" data-story="人間の閃きが生み出し、人間の手が創り出す輝きを、世界へ。" aria-hidden="true"></span>
+        <span class="hm-story-orbit" id="hm-story-orbit">
+          <span class="hm-story-star" id="hm-story-star" aria-hidden="true">
+            <img
+              class="hm-story-star__img"
+              src="assets/13589.png"
+              alt=""
+              width="64"
+              height="120"
+              decoding="async"
+            >
+          </span>
+          <span class="hm-story-label-clip" id="hm-story-label-clip">
+            <span class="footer-pill__label hm-story-visible" id="hm-story-visible" data-story="人間の閃きが生み出し、人間の手が創り出す輝きを、世界へ。" aria-hidden="true"></span>
+          </span>
+        </span>
         <span class="footer-pill__duck" id="hm-footer-duck" aria-hidden="true">
           <svg class="footer-pill__duck-svg" viewBox="0 0 48 40" width="36" height="30" role="img">
             <title>duck</title>
@@ -177,10 +194,14 @@
       var missionAfterTarget = document.getElementById("hm-mission-after-target");
       var missionDuckTarget = document.getElementById("hm-mission-duck-target");
       var footerPill = document.getElementById("hm-footer-story");
+      var storyStar = document.getElementById("hm-story-star");
+      var storyLabelClip = document.getElementById("hm-story-label-clip");
+      var storyOrbit = document.getElementById("hm-story-orbit");
       if (!label || !flock || !mission || !footDuck || !missionLeadTarget || !missionDuckTarget || !footerPill) return;
 
       var missionPanel = mission.querySelector(".hm-mission__panel");
-      var missionTag = mission.querySelector(".hm-mission__tag");
+      var missionTagLead = mission.querySelector(".hm-mission__tag--lead");
+      var stmtBundle = document.getElementById("hm-mission-stmt-bundle");
 
       var raw = label.getAttribute("data-story") || "";
       label.removeAttribute("data-story");
@@ -223,10 +244,16 @@
       function clearMorphStyles() {
         flock.style.cssText = "";
         label.style.cssText = "";
+        if (storyLabelClip) storyLabelClip.style.cssText = "";
+        if (storyStar) storyStar.style.cssText = "";
+        if (storyOrbit) storyOrbit.style.cssText = "";
         footDuck.style.cssText = "";
         missionDuckTarget.style.cssText = "";
         if (missionPanel) missionPanel.style.cssText = "";
-        if (missionTag) missionTag.style.cssText = "";
+        mission.querySelectorAll(".hm-mission__tag").forEach(function (el) {
+          el.style.cssText = "";
+        });
+        if (stmtBundle) stmtBundle.style.cssText = "";
         if (missionLeadTarget) missionLeadTarget.style.cssText = "";
         if (missionAfterTarget) missionAfterTarget.style.cssText = "";
       }
@@ -287,7 +314,10 @@
 
         document.body.classList.remove("hm-mission-locked");
 
-        var wave = 3 + smoothstep(g) * (n + 6);
+        /* 写真→文字：先に画像が目立ち、スクロールでクリップ開放＋タイピングが進む */
+        var seedGraphic = smoothstep((g - 0.035) / 0.24);
+        var textReveal = smoothstep((g - 0.07) / 0.4);
+        var wave = 3 + smoothstep(g * (0.2 + 0.8 * textReveal)) * (n + 6);
         renderVisible(wave);
 
         var vh = window.innerHeight;
@@ -299,11 +329,14 @@
         var settle = smoothstep((e - 0.76) / 0.24);
         var merge = smoothstep((g - 0.89) / 0.11);
         var dockOpacity = merge;
-        var flockOpacity = 1 - merge;
-        /* Missionブロック全体がビューポート下から持ち上がる量（スクロールに連動） */
-        var riseAmt = (1 - smoothstep((g - 0.06) / 0.82)) * Math.min(vh * 0.52, 560);
+        /* Mission 左端へ到達するまでフロックは不透明。最後の数％の g のみフェード */
+        var flockFade = 1 - smoothstep((g - 0.91) / 0.09);
+        /* Mission／Mission Statement 共通の「下から持ち上げ」進行（同一フェーズ） */
+        var riseT = smoothstep((g - 0.06) / 0.82);
+        var riseAmt = (1 - riseT) * Math.min(vh * 0.52, 560);
         var tagReveal = smoothstep((g - 0.08) / 0.28);
-        var statementReveal = missionAfterTarget ? smoothstep((g - 0.88) / 0.12) : 0;
+        var stmtOp = stmtBundle ? smoothstep((riseT - 0.12) / 0.78) : 0;
+        var stmtSlide = stmtBundle ? (1 - riseT) * Math.min(vh * 0.26, 168) : 0;
 
         var fsStart = parseFloat(getComputedStyle(footerPill).fontSize) || 16;
         var lineRef = missionLeadTarget.querySelector(".hm-mission__line");
@@ -328,6 +361,10 @@
         flock.style.justifyContent = "flex-start";
         flock.style.gap = "clamp(4px, 1vw, 10px)";
 
+        /* 前フレームの transform が br0 を汚さないよう、レイアウト測定前にリセット */
+        if (storyOrbit) storyOrbit.style.transform = "";
+        if (storyStar) storyStar.style.transform = "";
+
         var br0 = flock.getBoundingClientRect();
         var duckBr0 = footDuck.getBoundingClientRect();
 
@@ -342,7 +379,45 @@
         flock.style.maxWidth = "none";
 
         flock.style.pointerEvents = merge > 0.55 ? "none" : "auto";
-        flock.style.opacity = String(flockOpacity);
+        flock.style.opacity = String(flockFade);
+
+        /* 本体の left 補間で Mission 左端へ寄る。追加の横ズレは e→1 で 0 に戻しピッタリ重ねる */
+        var wander = (1 - e) * smoothstep(g);
+        var sweepLeft = -wander * Math.min(90 + vh * 0.1, 180);
+        var fan = smoothstep((e - 0.06) / 0.84) * (1 - e);
+        if (storyOrbit) {
+          storyOrbit.style.transform =
+            "translateX(" +
+            sweepLeft.toFixed(1) +
+            "px) rotate(" +
+            (-fan * 2.5).toFixed(2) +
+            "deg)";
+        }
+
+        if (storyLabelClip) {
+          var clipR = ((1 - textReveal) * 100).toFixed(3);
+          storyLabelClip.style.clipPath = "inset(-14px " + clipR + "% -14px 0)";
+          storyLabelClip.style.webkitClipPath = storyLabelClip.style.clipPath;
+        }
+        if (storyStar) {
+          var starHandoff = smoothstep((e - 0.45) / 0.42);
+          /* 序盤だけ星→文字の切替でわずかに抑え、移動中はほぼ不透明。フェードは merge 後半のみ */
+          var photoIntro = 1 - seedGraphic * 0.22;
+          var photoOut = 1 - smoothstep((merge - 0.38) / 0.52);
+          storyStar.style.opacity = String(clamp(photoIntro * photoOut, 0, 1));
+          var photoDrift = -wander * Math.min(20 + vh * 0.03, 40);
+          var rotEase = (1 - e) * (1 - e);
+          storyStar.style.transform =
+            "translateX(" +
+            photoDrift.toFixed(1) +
+            "px) rotate(" +
+            (rotEase * (seedGraphic * 28 + starHandoff * 10)).toFixed(1) +
+            "deg) scale(" +
+            (1 - (1 - e) * (seedGraphic * 0.12 + starHandoff * 0.1)).toFixed(3) +
+            ") translateY(" +
+            ((1 - e) * (-seedGraphic * 4 + starHandoff * -5)).toFixed(1) +
+            "px)";
+        }
 
         label.style.display = "block";
         label.style.width = "100%";
@@ -362,7 +437,7 @@
         footDuck.style.bottom = "auto";
         footDuck.style.zIndex = "1601";
         footDuck.style.margin = "0";
-        footDuck.style.opacity = String(flockOpacity);
+        footDuck.style.opacity = String(flockFade);
 
         if (merge > 0.72) {
           var dOp = (merge - 0.72) / 0.28;
@@ -382,17 +457,18 @@
           missionPanel.style.transform = "translateY(" + riseAmt + "px)";
           missionPanel.style.willChange = "transform";
         }
-        if (missionTag) {
-          missionTag.style.opacity = String(tagReveal);
+        if (missionTagLead) {
+          missionTagLead.style.opacity = String(tagReveal);
         }
         if (missionLeadTarget) {
           missionLeadTarget.style.opacity = String(dockOpacity);
           missionLeadTarget.style.visibility = dockOpacity < 0.002 ? "hidden" : "visible";
         }
-        if (missionAfterTarget) {
-          missionAfterTarget.style.opacity = String(statementReveal);
-          missionAfterTarget.style.transform =
-            "translateY(" + (1 - statementReveal) * Math.min(28, vh * 0.04) + "px)";
+        /* タイトル列＋本文列を1単位としてフェード・縦オフセット（Mission本文とは独立したまとまり） */
+        if (stmtBundle) {
+          stmtBundle.style.opacity = String(stmtOp);
+          stmtBundle.style.visibility = stmtOp < 0.006 ? "hidden" : "visible";
+          stmtBundle.style.transform = "translateY(" + stmtSlide + "px)";
         }
       }
 
